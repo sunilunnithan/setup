@@ -1,0 +1,66 @@
+- name: Install packages like jq, wireshark, fzf, fd, bat, etc
+  become: true
+  apt:
+    name:
+      [
+        "vim",
+        "jq",
+        "watch",
+        "tmux",
+        "wireshark",
+        "fzf",
+        "sqlite3",
+        "libsqlite3-dev",
+        "htop",
+        "xclip",
+        "xsel",
+        "tldr",
+        "ripgrep",
+        "fd-find",
+        "colordiff",
+        "redis-server",
+        "redis",
+      ]
+  tags:
+    - install
+    - productivity
+
+- name: install rust tools
+  shell: |
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    source $HOME/.cargo/env
+  tags:
+    - install
+    - productivity
+    - rust
+  args:
+    executable: /bin/bash
+
+- name: source cargo
+  shell: |
+    source $HOME/.cargo/env
+  tags:
+    - install
+    - productivity
+    - rust
+  args:
+    executable: /bin/bash
+
+- name: Add Rust to PATH
+  lineinfile:
+    path: "/etc/environment"
+    line: 'PATH="$PATH:$HOME/.cargo/bin"'
+  tags:
+    - install
+    - productivity
+    - rust
+
+- name: install rust tools like git-delta, zoxide, just, bat
+  shell: |
+    ~/.cargo/bin/cargo install git-delta zoxide just bat
+  tags:
+    - install
+    - productivity
+    - rust
+  args:
+    executable: /bin/bash

@@ -1,0 +1,36 @@
+- name: Installing stow
+  apt: name=stow
+  tags:
+    - install
+    - dotfiles
+    - stow
+
+- name: Cloning .dotfiles
+  ansible.builtin.git:
+    repo: "git@github.com:sunilunnithan/dotfiles.git"
+    dest: "{{ lookup('env', 'HOME') }}/dotfiles"
+    recursive: yes
+    update: yes
+    accept_hostkey: yes
+    version: main
+  tags:
+    - install
+    - dotfiles
+    - stow
+
+- name: Ensure .zshrc is deleted
+  file:
+    path: "~/.zshrc"
+    state: absent
+
+- name: Ensure .tmux.conf is deleted
+  file:
+    path: "~/.tmux.conf"
+    state: absent
+
+- name: Stow dotfiles
+  shell: cd $HOME/dotfiles && ./ubuntu
+  tags:
+    - install
+    - dotfiles
+    - stow

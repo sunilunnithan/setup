@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ansible-playbook --ask-vault-password $TAGS local.yml -v

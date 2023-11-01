@@ -1,0 +1,66 @@
+- name: Install System Packages 1 (build-essential, cmake, pkg-config, pthread)
+  become: true
+  apt:
+    name:
+      [
+        "build-essential",
+        "cmake",
+        "pkg-config",
+        "libpthread-stubs0-dev",
+        "libxslt1-dev",
+        "libcurl4-openssl-dev",
+        "libksba8",
+        "libksba-dev",
+        "libreadline-dev",
+      ]
+  tags:
+    - install
+    - neovim
+    - core
+
+- name: Install System Packages 2 (lua, luajit, unzip, net-tools, libtool, libtool-bin, libssl-dev, gettext)
+  become: true
+  apt:
+    name:
+      [
+        "lua5.1",
+        "luajit",
+        "unzip",
+        "libtool",
+        "libtool-bin",
+        "libssl-dev",
+        "gettext",
+      ]
+  tags:
+    - install
+    - neovim
+    - core
+
+- name: Install System Packages 3 (the rest)
+  become: true
+  apt:
+    name:
+      [
+        "curl",
+        "golang",
+        "lsof",
+        "ccache",
+        "ninja-build",
+        "python3-pip",
+        "python3-distutils",
+        "python3-venv",
+        "moreutils",
+        "clangd",
+      ]
+  tags:
+    - install
+    - core
+
+- name: Install Clang
+  become: true
+  apt:
+    name: ["clang", "clang-11", "clang-12", "clangd", "clangd-11", "clangd-12"]
+  tags:
+    - install
+    - neovim
+    - core
